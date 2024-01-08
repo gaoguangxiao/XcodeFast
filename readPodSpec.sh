@@ -30,14 +30,11 @@ function getFileAtDirectory(){
 }
 getFileAtDirectory $directory $file_extension
 
-# echo "\n file_path: ${file_path}"
-# echo "\n file_name: ${file_name}"
-
-# echo "---- 获取podspec文件 end ----"
-# echo "---- 读取podspec文件内容 begin ----"
-
 # 定义pod文件名称
 pod_file_name=${file_name}
+
+# echo "读取文件路径"$pod_file_name
+
 # 查找 podspec 的版本
 # search_str="s.version"
 search_str=$1
@@ -77,8 +74,6 @@ podspec_1=$version
 fi
 
 done < $my_file
-
-# echo "\n -------------"
 
 echo "${podspec_1}"
 

@@ -11,6 +11,7 @@ pod_specLint="pod spec lint --allow-warnings"
 pod_trunkpush="pod trunk push --allow-warnings"
 git_push="git push【根据s.sumary描述推送代码】"
 git_tag="git tag【s.version构建tag】"
+git_pushtagspec="git push_tag_trunkpush【一键部署】"
 function choosList()
 {
 osascript  <<EOF
@@ -21,7 +22,7 @@ osascript  <<EOF
          activate
 
          -- 要显示在选择列表中的选项
-         set podOptions to {"输入Pod指令", "$pod_in", "$pod_up", "$pod_liblint","$pod_specLint","$pod_trunkpush","$git_push","$git_tag"}
+         set podOptions to {"输入Pod指令", "$pod_in", "$pod_up", "$pod_liblint","$pod_specLint","$pod_trunkpush","$git_push","$git_tag","$git_pushtagspec"}
 
          -- 选择列表中默认选中的选项
          set defaultItems to {"pod install"}
@@ -96,6 +97,14 @@ function runInTerminal()
    _path=$(dirname "$1")
    combineGitCommand "$_path" "$2"
    ;;
+   $git_tag)
+   _path=$(dirname "$1")
+   combineGitCommand "$_path" "$2"
+   ;;
+   $git_pushtagspec)
+   _path=$(dirname "$1")
+   combineGitCommand "$_path" "$2"
+   ;;
    *)
    # echo "其他模式"
    esac
@@ -109,10 +118,12 @@ function solePodCommand()
 osascript <<EOF
     tell application "Terminal"
     if not (exists window 1) then reopen
-    activate
     do script "cd \"$1/\"; $2" in window 1
-   end tell
+    end tell
+    activate
 EOF
+    # THIS_FILE=`basename "$0"`
+    # echo "THIS_FILE:${THIS_FILE}"
 }
 
 function combineGitCommand()
@@ -122,7 +133,7 @@ osascript <<EOF
     tell application "Terminal"
     if not (exists window 1) then reopen
     activate
-    do script "source /Users/gaoguangxiao/Documents/GitHub/XcodeFast/FastExecutionGit.sh \"$1\" \"$2\"" in window 1
+    do script "cd \"$1/\"; source ~/Documents/GitHub/XcodeFast/FastExecutionGit.sh \"$1\" \"$2\"" in window 1
    end tell
 EOF
 

@@ -149,8 +149,7 @@ osascript <<EOF
     tell application "iTerm"
         if not (exists window 1) then reopen
         set myWindow to current window
-        tell current session of myWindow
-            write text "cd \"$1/..\"; $2"
+        tell current session of myWindow write text "cd \"$1/..\"; $2"
         end tell
         activate
     end tell
